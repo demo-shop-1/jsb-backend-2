@@ -2,8 +2,10 @@ package demo.jsb2.modules.categories.adapters.mappers;
 
 import demo.jsb2.modules.categories.adapters.dto.CategoryCreateRequestDTO;
 import demo.jsb2.modules.categories.adapters.dto.CategoryCreateResponseDTO;
+import demo.jsb2.modules.categories.adapters.dto.CategoryGetOneResponseDTO;
 import demo.jsb2.modules.categories.adapters.entities.CategoryEntity;
 import demo.jsb2.modules.categories.domain.models.CategoryModel;
+import demo.jsb2.utils.ObjectUtil;
 
 public class CategoryMapper {
 
@@ -45,6 +47,17 @@ public class CategoryMapper {
         result.setDescription(request.getDescription());
         result.setName(request.getName());
         result.setIsActive(request.getIsActive());
+
+        return result;
+    }
+
+    public static CategoryGetOneResponseDTO toCategoryGetOneResponseDTO(CategoryModel request) {
+        CategoryGetOneResponseDTO result = new CategoryGetOneResponseDTO();
+        result.setId(request.getId());
+        result.setDescription(request.getDescription());
+        result.setName(request.getName());
+        result.setIsActive(request.getIsActive());
+        result.setDateCreated(request.getDateCreated().format(ObjectUtil.getFormatterDefault()));
 
         return result;
     }
