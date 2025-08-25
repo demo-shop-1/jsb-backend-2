@@ -1,6 +1,7 @@
 package demo.jsb2.modules.products.adapters.aop;
 
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import demo.jsb2.modules.products.adapters.entity.ProductEntity;
 import demo.jsb2.modules.products.adapters.mappers.ProductMapper;
-import demo.jsb2.modules.products.domain.ProductMessageEnum;
+import demo.jsb2.modules.products.domain.enums.ProductMessageEnum;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.modules.products.domain.utils.ProductUtil;
 import jakarta.validation.ConstraintViolation;
@@ -20,7 +21,8 @@ import lombok.RequiredArgsConstructor;
 @Component
 @Order(1)
 @RequiredArgsConstructor
-public class ProductCommandAspect {
+public class ProductAspect {
+    protected static final Logger logger = Logger.getLogger(ProductAspect.class.getName());
     private final Validator validator;
 
     @Before("ProductServicePointcuts.validateCommand() && args(entity)")
@@ -30,10 +32,10 @@ public class ProductCommandAspect {
             Set<ConstraintViolation<Object>> violations = validator.validate(productToValidate);
 
             if (!violations.isEmpty()) {
-                // SE RECUPERA EL ERROR pero no hace falta devolverlo, tal vez mandarlo en los logs del servidor
-                String errors = violations.stream().map(ConstraintViolation::getMessage)
+                String error = violations.stream().map(ConstraintViolation::getMessage)
                         .reduce((a, b) -> a + "; " + b)
-                        .orElse("Entidad inválida");
+                        .orElse("Invalid entity");
+                logger.warning(String.format("Info > ProductAspect > validateCommandBefore > There is an error with this entity: %s", error));
                 ProductUtil.throwValidationError(ProductMessageEnum.PRODUCT_ERROR);
             }
         }

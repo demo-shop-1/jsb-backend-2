@@ -1,4 +1,4 @@
-package demo.jsb2.modules.products.domain;
+package demo.jsb2.modules.products.domain.enums;
 
 public enum ProductMessageEnum {
     // field CODE has to be unique

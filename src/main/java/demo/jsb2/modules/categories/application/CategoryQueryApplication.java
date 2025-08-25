@@ -45,7 +45,7 @@ public class CategoryQueryApplication extends CategoryApplication implements Cat
     }
 
     @Override
-    public Boolean validateIfExistById(Integer id) {
+    public Boolean existThisCategory(Integer id) {
         return this.findById(id) != null;
     }
 }

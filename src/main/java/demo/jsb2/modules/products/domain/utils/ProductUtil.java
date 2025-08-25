@@ -1,6 +1,6 @@
 package demo.jsb2.modules.products.domain.utils;
 
-import demo.jsb2.modules.products.domain.ProductMessageEnum;
+import demo.jsb2.modules.products.domain.enums.ProductMessageEnum;
 import demo.jsb2.modules.products.domain.exceptions.ProductQueryException;
 import demo.jsb2.modules.products.domain.exceptions.ProductValidationException;
 

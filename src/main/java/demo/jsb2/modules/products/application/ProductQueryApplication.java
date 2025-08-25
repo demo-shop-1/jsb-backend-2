@@ -2,7 +2,7 @@ package demo.jsb2.modules.products.application;
 
 import org.springframework.stereotype.Service;
 
-import demo.jsb2.modules.products.domain.ProductMessageEnum;
+import demo.jsb2.modules.products.domain.enums.ProductMessageEnum;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.modules.products.domain.ports.out.ProductQueryOutRepository;
 import demo.jsb2.modules.products.domain.services.ProductQueryService;
