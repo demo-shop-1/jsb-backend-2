@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 public class CategoryApplication {
 
     protected static final Logger logger = Logger.getLogger(CategoryApplication.class.getName());
-    protected String nameClass;
+    protected String nameClass = "CategoryApplication";
 
     protected void infoMethod(String nameMethod, String message) {
         logger.info(String.format("Info > %s > %s: %s", nameClass, nameMethod, message));

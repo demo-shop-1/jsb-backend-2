@@ -1,6 +1,5 @@
 package demo.jsb2.modules.categories.adapters.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +12,12 @@ import demo.jsb2.modules.categories.adapters.mappers.CategoryMapper;
 import demo.jsb2.modules.categories.domain.models.CategoryModel;
 import demo.jsb2.modules.categories.domain.services.CategoryCommandService;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class CategoryCommandController extends CategoryController {
-    @Autowired
-    private final CategoryCommandService categoryCommandApplication = null;
+    private final CategoryCommandService categoryCommandApplication;
 
     @PostConstruct
     public void init() {
