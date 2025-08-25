@@ -1,6 +1,5 @@
 package demo.jsb2.modules.categories.application;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import demo.jsb2.modules.categories.domain.enums.CategoryMessageEnum;
@@ -10,12 +9,13 @@ import demo.jsb2.modules.categories.domain.services.CategoryQueryService;
 import demo.jsb2.modules.categories.domain.utils.CategoryUtil;
 import demo.jsb2.utils.ObjectUtil;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryQueryApplication extends CategoryApplication implements CategoryQueryService {
 
-    @Autowired
-    private final CategoryQueryOutRepository categoryQueryOutRepository = null;
+    private final CategoryQueryOutRepository categoryQueryOutRepository;
 
     @PostConstruct
     public void init() {

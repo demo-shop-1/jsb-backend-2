@@ -1,6 +1,5 @@
 package demo.jsb2.modules.categories.adapters.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CategoryQueryController extends CategoryController {
 
-    @Autowired
     private final CategoryQueryService categoryQueryApplication;
 
     @PostConstruct
