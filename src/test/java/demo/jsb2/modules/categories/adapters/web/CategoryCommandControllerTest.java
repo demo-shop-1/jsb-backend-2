@@ -16,8 +16,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import demo.jsb2.modules.categories.adapters.dto.CategoryCreateRequestDTO;
 import demo.jsb2.modules.categories.adapters.dto.CategoryCreateResponseDTO;
 import demo.jsb2.modules.categories.domain.enums.CategoryMessageEnum;
@@ -33,12 +31,9 @@ public class CategoryCommandControllerTest {
     @InjectMocks
     private CategoryCommandController categoryCommandController;
 
-    ObjectMapper objectMapper;
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        objectMapper = new ObjectMapper();
     }
 
     @Test

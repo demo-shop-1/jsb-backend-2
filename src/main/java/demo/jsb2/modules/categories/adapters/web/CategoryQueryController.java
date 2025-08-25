@@ -14,12 +14,14 @@ import demo.jsb2.modules.categories.domain.models.CategoryModel;
 import demo.jsb2.modules.categories.domain.services.CategoryQueryService;
 import demo.jsb2.modules.categories.domain.utils.CategoryUtil;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class CategoryQueryController extends CategoryController {
 
     @Autowired
-    private final CategoryQueryService categoryQueryApplication = null;
+    private final CategoryQueryService categoryQueryApplication;
 
     @PostConstruct
     public void init() {
