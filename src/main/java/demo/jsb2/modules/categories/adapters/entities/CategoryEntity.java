@@ -1,12 +1,17 @@
 package demo.jsb2.modules.categories.adapters.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import demo.jsb2.modules.products.adapters.entity.ProductEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -44,4 +49,8 @@ public class CategoryEntity {
 
     @Column(name = "last_updated", nullable = true)
     private LocalDateTime lastUpdated;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "category")
+    private List<ProductEntity> products = new ArrayList<>();
+
 }

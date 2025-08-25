@@ -28,8 +28,8 @@ public class CategoryCommandController extends CategoryController {
     public ResponseEntity<CategoryCreateResponseDTO> createCategory(@RequestBody CategoryCreateRequestDTO request) {
         startMethod("createCategory");
 
-        CategoryModel categoryToCreate = CategoryMapper.toCategoryModel(request);
-        CategoryModel categoryCreated = categoryCommandApplication.createCategory(categoryToCreate);
+        CategoryModel categoryCreated = categoryCommandApplication
+                .createCategory(CategoryMapper.toCategoryModel(request));
 
         endMethod("createCategory");
         return ResponseEntity.status(HttpStatus.CREATED)
