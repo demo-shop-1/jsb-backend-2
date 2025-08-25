@@ -43,4 +43,9 @@ public class CategoryQueryApplication extends CategoryApplication implements Cat
         endMethod("findByName");
         return categoryQueryOutRepository.findOneByName(name).orElse(null);
     }
+
+    @Override
+    public Boolean validateIfExistById(Integer id) {
+        return this.findById(id) != null;
+    }
 }
