@@ -1,0 +1,11 @@
+package demo.jsb2.modules.categories.adapters.dto;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class CategoryCreateResponseDTO extends CategoryDTO {
+    private String description;
+    private Boolean isActive;
+}
