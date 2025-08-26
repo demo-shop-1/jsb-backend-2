@@ -11,6 +11,7 @@ import demo.jsb2.modules.products.domain.services.ProductCommandService;
 import demo.jsb2.modules.products.domain.services.ProductQueryService;
 import demo.jsb2.modules.products.domain.services.ProductValidationService;
 import demo.jsb2.modules.products.domain.utils.ProductUtil;
+import demo.jsb2.utils.ObjectUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
@@ -56,9 +57,59 @@ public class ProductCommandApplication extends ProductApplication implements Pro
         startMethod("updateProduct");
 
         // validate SKU
-        // validate rest of fields
+        ProductModel productFound = productQueryApplication.findBySku(product.getSku());
+        if (productFound == null) {
+            infoMethod("updateProduct", String.format("Does not exist this SKU: %s", product.getSku()));
+            ProductUtil.throwValidationError(ProductMessageEnum.SKU_NOT_EXIST);
+        } else {
+
+            // validate name
+            if (product.getName() == null) {
+                product.setName(productFound.getName());
+            } else {
+                productValidationService.validateName(product.getName());
+            }
+
+            // validate category
+            if (product.getCategory() == null) {
+                product.setCategory(productFound.getCategory());
+            } else {
+                productValidationService.validateCategory(product.getCategory());
+            }
+
+            // validate description
+            if (product.getDescription() == null) {
+                product.setDescription(productFound.getDescription());
+            }
+
+            // validate image_url
+            if (ObjectUtil.isNull(product.getImageUrl())) {
+                product.setImageUrl(productFound.getImageUrl());
+            }
+
+            // validate unit_price
+            if (ObjectUtil.isNull(product.getUnitPrice())) {
+                product.setUnitPrice(productFound.getUnitPrice());
+            }
+
+            // validate is_active
+            if (ObjectUtil.isNull(product.getIsActive())) {
+                product.setIsActive(productFound.getIsActive());
+            }
+
+            // validate units in stock
+            if (ObjectUtil.isNull(product.getUnitsInStock())) {
+                product.setUnitsInStock(productFound.getUnitsInStock());
+            }
+
+            // set audit fields
+            product.setId(productFound.getId());
+            product.setDateCreated(productFound.getDateCreated());
+            product.setLastUpdated(LocalDateTime.now());
+        }
 
         endMethod("updateProduct");
+        return productCommandRepository.saveOne(product);
     }
 
 }
