@@ -16,4 +16,10 @@ public interface ProductCommandJpaRepository extends JpaRepository<ProductEntity
         return ProductMapper.toProductModel(save(ProductMapper.toProductEntity(product)));
     }
 
+    @Override
+    default Boolean deleteOne(Long id) {
+        deleteById(id);
+        return true;
+    }
+
 }

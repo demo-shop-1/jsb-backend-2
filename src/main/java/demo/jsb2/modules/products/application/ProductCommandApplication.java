@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import demo.jsb2.modules.products.domain.enums.ProductMessageEnum;
+import demo.jsb2.modules.products.domain.exceptions.ProductValidationException;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.modules.products.domain.ports.out.ProductCommandOutRepository;
 import demo.jsb2.modules.products.domain.services.ProductCommandService;
@@ -28,39 +29,39 @@ public class ProductCommandApplication extends ProductApplication implements Pro
     }
 
     @Override
-    public ProductModel createProduct(ProductModel product) {
-        startMethod("createProduct");
+    public ProductModel createOneProduct(ProductModel product) throws ProductValidationException {
+        startMethod("createOneProduct");
 
         // Validate unique SKU here
         ProductModel productFound = productQueryApplication.findBySku(product.getSku());
         if (productFound != null) {
-            infoMethod("createProduct", String.format("Already exists this SKU: %s", product.getSku()));
-            ProductUtil.throwValidationError(ProductMessageEnum.SKU_REPEATED);
+            infoMethod("createOneProduct", String.format("Already exists this SKU: %s", product.getSku()));
+            throw ProductUtil.throwValidationError(ProductMessageEnum.SKU_REPEATED);
         }
 
         // rest of validations
         productValidationService.isValidForSave(product);
 
-        infoMethod("createProduct", String.format("Creating product with SKU: %s", product.getSku()));
+        infoMethod("createOneProduct", String.format("Creating product with SKU: %s", product.getSku()));
 
         // Set variables of product
         product.setId(null);
         product.setIsActive(true);
         product.setDateCreated(LocalDateTime.now());
 
-        endMethod("createProduct");
+        endMethod("createOneProduct");
         return productCommandRepository.saveOne(product);
     }
 
     @Override
-    public ProductModel updateProduct(ProductModel product) {
-        startMethod("updateProduct");
+    public ProductModel updateOneProduct(ProductModel product) throws ProductValidationException {
+        startMethod("updateOneProduct");
 
         // validate SKU
         ProductModel productFound = productQueryApplication.findBySku(product.getSku());
         if (productFound == null) {
-            infoMethod("updateProduct", String.format("Does not exist this SKU: %s", product.getSku()));
-            ProductUtil.throwValidationError(ProductMessageEnum.SKU_NOT_EXIST);
+            infoMethod("updateOneProduct", String.format("Does not exist this SKU: %s", product.getSku()));
+            throw ProductUtil.throwValidationError(ProductMessageEnum.SKU_NOT_EXIST);
         } else {
 
             // validate name
@@ -108,8 +109,21 @@ public class ProductCommandApplication extends ProductApplication implements Pro
             product.setLastUpdated(LocalDateTime.now());
         }
 
-        endMethod("updateProduct");
+        endMethod("updateOneProduct");
         return productCommandRepository.saveOne(product);
+    }
+
+    @Override
+    public Boolean deleteOneProduct(String sku) throws ProductValidationException {
+        startMethod("deleteOneProduct");
+        // validate SKU
+        ProductModel productFound = productQueryApplication.findBySku(sku);
+        if (productFound == null) {
+            infoMethod("deleteOneProduct", String.format("Does not exist this SKU: %s", sku));
+            throw ProductUtil.throwValidationError(ProductMessageEnum.SKU_NOT_EXIST);
+        }
+        endMethod("deleteOneProduct");
+        return productCommandRepository.deleteOne(productFound.getId());
     }
 
 }

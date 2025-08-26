@@ -2,6 +2,7 @@ package demo.jsb2.modules.products.adapters.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,10 +32,10 @@ public class ProductCommandController extends ProductController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ProductCreateResponseDTO> createProduct(@RequestBody ProductCreateRequestDTO request) {
+    public ResponseEntity<ProductCreateResponseDTO> createOneProduct(@RequestBody ProductCreateRequestDTO request) {
         startMethod("createProduct");
 
-        ProductModel productCreated = productCommandApplication.createProduct(ProductMapper.toProductModel(request));
+        ProductModel productCreated = productCommandApplication.createOneProduct(ProductMapper.toProductModel(request));
 
         endMethod("createProduct");
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -42,17 +43,25 @@ public class ProductCommandController extends ProductController {
     }
 
     @PutMapping("/update/{sku}")
-    public ResponseEntity<ProductUpdateResponseDTO> updateProduct(@PathVariable String sku,
+    public ResponseEntity<ProductUpdateResponseDTO> updateOneProduct(@PathVariable String sku,
             @RequestBody ProductUpdateRequestDTO request) {
         startMethod("updateProduct");
 
         ProductModel productToUpdate = ProductMapper.toProductModel(request);
         productToUpdate.setSku(sku);
-        ProductModel productUpdated = productCommandApplication.updateProduct(productToUpdate);
+        ProductModel productUpdated = productCommandApplication.updateOneProduct(productToUpdate);
 
         endMethod("updateProduct");
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ProductMapper.toProductUpdateResponseDTO(productUpdated));
+    }
+
+    @DeleteMapping("/delete/{sku}")
+    public ResponseEntity<Void> deleteOneProduct(@PathVariable String sku) {
+        startMethod("deleteOneProduct");
+        productCommandApplication.deleteOneProduct(sku);
+        endMethod("deleteOneProduct");
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

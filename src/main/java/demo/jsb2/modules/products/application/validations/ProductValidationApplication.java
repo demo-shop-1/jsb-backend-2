@@ -52,10 +52,10 @@ public class ProductValidationApplication extends ProductApplication implements 
         Boolean isValid = true;
 
         if (ObjectUtil.isBlankString(sku)) {
-            ProductUtil.throwValidationError(ProductMessageEnum.SKU_BLANK);
+            throw ProductUtil.throwValidationError(ProductMessageEnum.SKU_BLANK);
         }
         if (sku.length() < ProductIntegerEnum.SKU_MIN_SIZE.value) {
-            ProductUtil.throwValidationError(ProductMessageEnum.SKU_MIN);
+            throw ProductUtil.throwValidationError(ProductMessageEnum.SKU_MIN);
         }
 
         return isValid;
@@ -66,7 +66,7 @@ public class ProductValidationApplication extends ProductApplication implements 
         Boolean isValid = true;
 
         if (ObjectUtil.isBlankString(name)) {
-            ProductUtil.throwValidationError(ProductMessageEnum.NAME_BLANK);
+            throw ProductUtil.throwValidationError(ProductMessageEnum.NAME_BLANK);
         }
 
         return isValid;
@@ -77,12 +77,12 @@ public class ProductValidationApplication extends ProductApplication implements 
         Boolean isValid = true;
 
         if (category.getId() == null) {
-            ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NULL);
+            throw ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NULL);
         }
         Boolean existThisCategory = this.existThisCategory(category.getId());
         infoMethod("validateCategory", String.format("Exist this category? %s", existThisCategory));
         if (!existThisCategory) {
-            ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NOT_EXIST);
+            throw ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NOT_EXIST);
         }
 
         return isValid;
