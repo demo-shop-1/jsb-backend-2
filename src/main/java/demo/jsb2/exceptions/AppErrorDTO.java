@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class GlobalErrorDTO {
+public class AppErrorDTO {
     private String messageRaw;
     private String messageCode;
     private String status;

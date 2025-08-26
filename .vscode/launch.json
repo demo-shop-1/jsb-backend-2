@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Java Spring Boot Demo Shop 2",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "demo.jsb2.AppRunner",
+            "projectName": "jsb2",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

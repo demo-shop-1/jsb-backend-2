@@ -7,7 +7,7 @@ import demo.jsb2.modules.categories.domain.models.CategoryModel;
 import demo.jsb2.modules.categories.domain.ports.out.CategoryQueryOutRepository;
 import demo.jsb2.modules.categories.domain.services.CategoryQueryService;
 import demo.jsb2.modules.categories.domain.utils.CategoryUtil;
-import demo.jsb2.utils.ObjectUtil;
+import demo.jsb2.utils.AppObjectUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +36,7 @@ public class CategoryQueryApplication extends CategoryApplication implements Cat
     public CategoryModel findByName(String name) {
         startMethod("findByName");
 
-        if (ObjectUtil.isBlankString(name)) {
+        if (AppObjectUtil.isBlankString(name)) {
             CategoryUtil.throwQueryError(CategoryMessageEnum.NAME_BLANK);
         }
 
@@ -45,7 +45,7 @@ public class CategoryQueryApplication extends CategoryApplication implements Cat
     }
 
     @Override
-    public Boolean validateIfExistById(Integer id) {
+    public Boolean existThisCategory(Integer id) {
         return this.findById(id) != null;
     }
 }
