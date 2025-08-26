@@ -4,6 +4,8 @@ import demo.jsb2.modules.categories.adapters.mappers.CategoryMapper;
 import demo.jsb2.modules.categories.domain.models.CategoryModel;
 import demo.jsb2.modules.products.adapters.dto.ProductCreateRequestDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductCreateResponseDTO;
+import demo.jsb2.modules.products.adapters.dto.ProductUpdateRequestDTO;
+import demo.jsb2.modules.products.adapters.dto.ProductUpdateResponseDTO;
 import demo.jsb2.modules.products.adapters.entity.ProductEntity;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.utils.ObjectUtil;
@@ -71,6 +73,36 @@ public class ProductMapper {
         result.setUnitsInStock(request.getUnitsInStock());
         result.setIsActive(request.getIsActive());
         result.setDateCreated(request.getDateCreated().format(ObjectUtil.getFormatterDefault()));
+
+        return result;
+    }
+
+    public static ProductModel toProductModel(ProductUpdateRequestDTO request) {
+        ProductModel result = new ProductModel();
+        result.setName(request.getName());
+
+        CategoryModel category = new CategoryModel();
+        category.setId(request.getCategoryId());
+        result.setCategory(category);
+
+        result.setDescription(request.getDescription());
+        result.setUnitPrice(request.getUnitPrice());
+        result.setImageUrl(request.getImageUrl());
+        result.setUnitsInStock(request.getUnitsInStock());
+
+        return result;
+    }
+
+    public static ProductUpdateResponseDTO toProductUpdateResponseDTO(ProductModel request) {
+        ProductUpdateResponseDTO result = new ProductUpdateResponseDTO();
+        result.setName(request.getName());
+        result.setCategoryId(request.getCategory().getId());
+        result.setDescription(request.getDescription());
+        result.setUnitPrice(request.getUnitPrice());
+        result.setImageUrl(request.getImageUrl());
+        result.setUnitsInStock(request.getUnitsInStock());
+        result.setIsActive(request.getIsActive());
+        result.setLastUpdated(request.getLastUpdated().format(ObjectUtil.getFormatterDefault()));
 
         return result;
     }

@@ -2,6 +2,7 @@ package demo.jsb2.modules.products.application.validations;
 
 import org.springframework.stereotype.Service;
 
+import demo.jsb2.modules.categories.domain.models.CategoryModel;
 import demo.jsb2.modules.categories.domain.services.CategoryQueryService;
 import demo.jsb2.modules.products.application.ProductApplication;
 import demo.jsb2.modules.products.domain.enums.ProductIntegerEnum;
@@ -30,27 +31,13 @@ public class ProductValidationApplication extends ProductApplication implements 
         Boolean isValid = true;
 
         // validate sku
-        if (ObjectUtil.isBlankString(product.getSku())) {
-            ProductUtil.throwValidationError(ProductMessageEnum.SKU_BLANK);
-        }
-        if (product.getSku().length() < ProductIntegerEnum.SKU_MIN_SIZE.value) {
-            ProductUtil.throwValidationError(ProductMessageEnum.SKU_MIN);
-        }
+        validateSKU(product.getSku());
 
         // validate name
-        if (ObjectUtil.isBlankString(product.getName())) {
-            ProductUtil.throwValidationError(ProductMessageEnum.NAME_BLANK);
-        }
+        validateName(product.getName());
 
         // validate category
-        if (product.getCategory().getId() == null) {
-            ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NULL);
-        }
-        Boolean existThisCategory = this.existThisCategory(product.getCategory().getId());
-        infoMethod("isValidForSave", String.format("Exist this category? %s", existThisCategory));
-        if (!existThisCategory) {
-            ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NOT_EXIST);
-        }
+        validateCategory(product.getCategory());
 
         // The rest of validations will be validate for ProductAspect
         endMethod("isValidForSave");
@@ -60,6 +47,65 @@ public class ProductValidationApplication extends ProductApplication implements 
     @Override
     public Boolean existThisCategory(Integer id) {
         return categoryQueryApplication.existThisCategory(id);
+    }
+
+    @Override
+    public Boolean isValidForUpdate(ProductModel product) throws ProductValidationException {
+        Boolean isValid = true;
+
+        // validate sku
+        validateSKU(product.getSku());
+
+        // validate name
+        validateName(product.getName());
+
+        // validate category
+        validateCategory(product.getCategory());
+
+        // The rest of validations will be validate for ProductAspect
+
+        return isValid;
+    }
+
+    @Override
+    public Boolean validateSKU(String sku) throws ProductValidationException {
+        Boolean isValid = true;
+
+        if (ObjectUtil.isBlankString(sku)) {
+            ProductUtil.throwValidationError(ProductMessageEnum.SKU_BLANK);
+        }
+        if (sku.length() < ProductIntegerEnum.SKU_MIN_SIZE.value) {
+            ProductUtil.throwValidationError(ProductMessageEnum.SKU_MIN);
+        }
+
+        return isValid;
+    }
+
+    @Override
+    public Boolean validateName(String name) throws ProductValidationException {
+        Boolean isValid = true;
+
+        if (ObjectUtil.isBlankString(name)) {
+            ProductUtil.throwValidationError(ProductMessageEnum.NAME_BLANK);
+        }
+
+        return isValid;
+    }
+
+    @Override
+    public Boolean validateCategory(CategoryModel category) throws ProductValidationException {
+        Boolean isValid = true;
+
+        if (category.getId() == null) {
+            ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NULL);
+        }
+        Boolean existThisCategory = this.existThisCategory(category.getId());
+        infoMethod("isValidForSave", String.format("Exist this category? %s", existThisCategory));
+        if (!existThisCategory) {
+            ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NOT_EXIST);
+        }
+
+        return isValid;
     }
 
 }

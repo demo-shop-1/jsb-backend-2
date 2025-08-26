@@ -51,4 +51,14 @@ public class ProductCommandApplication extends ProductApplication implements Pro
         return productCommandRepository.saveOne(product);
     }
 
+    @Override
+    public ProductModel updateProduct(ProductModel product) {
+        startMethod("updateProduct");
+
+        // validate SKU
+        // validate rest of fields
+
+        endMethod("updateProduct");
+    }
+
 }
