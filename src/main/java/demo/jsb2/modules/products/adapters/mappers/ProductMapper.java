@@ -4,6 +4,7 @@ import demo.jsb2.modules.categories.adapters.mappers.CategoryMapper;
 import demo.jsb2.modules.categories.domain.models.CategoryModel;
 import demo.jsb2.modules.products.adapters.dto.ProductCreateRequestDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductCreateResponseDTO;
+import demo.jsb2.modules.products.adapters.dto.ProductSingleResponseDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductUpdateRequestDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductUpdateResponseDTO;
 import demo.jsb2.modules.products.adapters.entity.ProductEntity;
@@ -107,6 +108,18 @@ public class ProductMapper {
         result.setIsActive(request.getIsActive());
         result.setLastUpdated(request.getLastUpdated().format(ObjectUtil.getFormatterDefault()));
 
+        return result;
+    }
+
+    public static ProductSingleResponseDTO toProductSingleResponseDTO(ProductModel request) {
+        ProductSingleResponseDTO result = new ProductSingleResponseDTO();
+        result.setName(request.getName());
+        result.setCategoryId(request.getCategory().getId());
+        result.setDescription(request.getDescription());
+        result.setUnitPrice(request.getUnitPrice());
+        result.setImageUrl(request.getImageUrl());
+        result.setUnitsInStock(request.getUnitsInStock());
+        result.setIsActive(request.getIsActive());
         return result;
     }
 }

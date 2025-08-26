@@ -9,4 +9,5 @@ public interface ProductCommandService {
     ProductModel updateOneProduct(ProductModel product) throws ProductValidationException;
 
     Boolean deleteOneProduct(String sku) throws ProductValidationException;
+
 }

@@ -63,5 +63,4 @@ public class ProductCommandController extends ProductController {
         endMethod("deleteOneProduct");
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-
 }

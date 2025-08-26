@@ -3,6 +3,7 @@ package demo.jsb2.modules.products.application;
 import org.springframework.stereotype.Service;
 
 import demo.jsb2.modules.products.domain.enums.ProductMessageEnum;
+import demo.jsb2.modules.products.domain.exceptions.ProductQueryException;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.modules.products.domain.ports.out.ProductQueryOutRepository;
 import demo.jsb2.modules.products.domain.services.ProductQueryService;
@@ -22,7 +23,7 @@ public class ProductQueryApplication extends ProductApplication implements Produ
     }
 
     @Override
-    public ProductModel findBySku(String sku) {
+    public ProductModel findBySku(String sku) throws ProductQueryException {
         startMethod("findBySku");
 
         if (ObjectUtil.isBlankString(sku)) {
@@ -31,6 +32,19 @@ public class ProductQueryApplication extends ProductApplication implements Produ
 
         endMethod("findBySku");
         return productQueryRepository.findOneBySku(sku).orElse(null);
+    }
+
+    @Override
+    public ProductModel getOneProduct(String sku) throws ProductQueryException {
+        startMethod("getOneProduct");
+
+        ProductModel productFound = this.findBySku(sku);
+        if (productFound == null) {
+            infoMethod("getOneProduct", String.format("Does not exist this SKU: %s", sku));
+            throw ProductUtil.throwQueryError(ProductMessageEnum.SKU_NOT_EXIST);
+        }
+        endMethod("getOneProduct");
+        return productFound;
     }
 
 }
