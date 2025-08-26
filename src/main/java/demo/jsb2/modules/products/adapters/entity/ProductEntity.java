@@ -32,7 +32,7 @@ public class ProductEntity {
 
     @NotEmpty(message = "SKU is required")
     @Size(min = 4, message = "SKU minimum 4 characters")
-    @Column(name = "sku", nullable = false, length = 255)
+    @Column(name = "sku", unique = true, nullable = false, length = 255)
     private String sku;
 
     @NotEmpty(message = "Name is required")

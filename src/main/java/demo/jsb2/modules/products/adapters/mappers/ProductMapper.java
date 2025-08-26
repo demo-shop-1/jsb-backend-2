@@ -14,6 +14,7 @@ public class ProductMapper {
 
     public static ProductEntity toProductEntity(ProductModel request) {
         ProductEntity result = new ProductEntity();
+        result.setId(request.getId());
         result.setSku(request.getSku());
         result.setName(request.getName());
         result.setCategory(CategoryMapper.toCategoryEntity(request.getCategory()));
@@ -81,9 +82,11 @@ public class ProductMapper {
         ProductModel result = new ProductModel();
         result.setName(request.getName());
 
-        CategoryModel category = new CategoryModel();
-        category.setId(request.getCategoryId());
-        result.setCategory(category);
+        if (request.getCategoryId() != null) {
+            CategoryModel category = new CategoryModel();
+            category.setId(request.getCategoryId());
+            result.setCategory(category);
+        }
 
         result.setDescription(request.getDescription());
         result.setUnitPrice(request.getUnitPrice());

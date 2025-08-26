@@ -3,6 +3,11 @@ package demo.jsb2.utils;
 import java.time.format.DateTimeFormatter;
 
 public class ObjectUtil {
+
+    public static boolean isNull(Object request) {
+        return request == null;
+    }
+
     public static boolean isBlankString(String string) {
         return string == null || string.isBlank();
     }

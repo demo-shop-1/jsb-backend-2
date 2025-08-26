@@ -27,7 +27,6 @@ public class ProductValidationApplication extends ProductApplication implements 
 
     @Override
     public Boolean isValidForSave(ProductModel product) throws ProductValidationException {
-        startMethod("isValidForSave");
         Boolean isValid = true;
 
         // validate sku
@@ -40,31 +39,12 @@ public class ProductValidationApplication extends ProductApplication implements 
         validateCategory(product.getCategory());
 
         // The rest of validations will be validate for ProductAspect
-        endMethod("isValidForSave");
         return isValid;
     }
 
     @Override
     public Boolean existThisCategory(Integer id) {
         return categoryQueryApplication.existThisCategory(id);
-    }
-
-    @Override
-    public Boolean isValidForUpdate(ProductModel product) throws ProductValidationException {
-        Boolean isValid = true;
-
-        // validate sku
-        validateSKU(product.getSku());
-
-        // validate name
-        validateName(product.getName());
-
-        // validate category
-        validateCategory(product.getCategory());
-
-        // The rest of validations will be validate for ProductAspect
-
-        return isValid;
     }
 
     @Override
@@ -100,7 +80,7 @@ public class ProductValidationApplication extends ProductApplication implements 
             ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NULL);
         }
         Boolean existThisCategory = this.existThisCategory(category.getId());
-        infoMethod("isValidForSave", String.format("Exist this category? %s", existThisCategory));
+        infoMethod("validateCategory", String.format("Exist this category? %s", existThisCategory));
         if (!existThisCategory) {
             ProductUtil.throwValidationError(ProductMessageEnum.CATEGORY_NOT_EXIST);
         }

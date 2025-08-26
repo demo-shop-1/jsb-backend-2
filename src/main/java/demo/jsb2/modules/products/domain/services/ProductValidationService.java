@@ -5,7 +5,6 @@ import demo.jsb2.modules.products.domain.exceptions.ProductValidationException;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 
 public interface ProductValidationService {
-    Boolean isValidForUpdate(ProductModel product) throws ProductValidationException;
 
     Boolean isValidForSave(ProductModel product) throws ProductValidationException;
 
