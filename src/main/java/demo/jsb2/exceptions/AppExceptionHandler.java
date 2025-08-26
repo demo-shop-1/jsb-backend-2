@@ -7,15 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import demo.jsb2.utils.ObjectUtil;
+import demo.jsb2.utils.AppObjectUtil;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class AppExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<GlobalErrorDTO> handlerGenericaException(Exception exception) {
+    public ResponseEntity<AppErrorDTO> handlerGenericaException(Exception exception) {
 
-        GlobalErrorDTO globalError = new GlobalErrorDTO();
+        AppErrorDTO globalError = new AppErrorDTO();
         globalError.setMessageRaw(exception.getMessage());
 
         if (exception.getCause() != null) {
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
 
         globalError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
         globalError.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        globalError.setDate(LocalDateTime.now().format(ObjectUtil.getFormatterDefault()));
+        globalError.setDate(LocalDateTime.now().format(AppObjectUtil.getFormatterLocalDateTimeDefault()));
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(globalError);
     }

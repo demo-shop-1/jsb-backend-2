@@ -1,6 +1,8 @@
 package demo.jsb2.modules.products.domain.exceptions;
 
-public class ProductQueryException extends ProductException {
+import demo.jsb2.exceptions.AppException;
+
+public class ProductQueryException extends AppException {
 
     public ProductQueryException(String messageCode, String messageRaw) {
         super(messageCode, messageRaw);

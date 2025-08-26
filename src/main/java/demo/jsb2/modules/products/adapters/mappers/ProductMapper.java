@@ -1,7 +1,10 @@
 package demo.jsb2.modules.products.adapters.mappers;
 
+import org.springframework.data.domain.Page;
+
 import demo.jsb2.modules.categories.adapters.mappers.CategoryMapper;
 import demo.jsb2.modules.categories.domain.models.CategoryModel;
+import demo.jsb2.modules.products.adapters.dto.ProductAllResponseDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductCreateRequestDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductCreateResponseDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductSingleResponseDTO;
@@ -9,7 +12,7 @@ import demo.jsb2.modules.products.adapters.dto.ProductUpdateRequestDTO;
 import demo.jsb2.modules.products.adapters.dto.ProductUpdateResponseDTO;
 import demo.jsb2.modules.products.adapters.entity.ProductEntity;
 import demo.jsb2.modules.products.domain.models.ProductModel;
-import demo.jsb2.utils.ObjectUtil;
+import demo.jsb2.utils.AppObjectUtil;
 
 public class ProductMapper {
 
@@ -37,9 +40,9 @@ public class ProductMapper {
         result.setName(request.getName());
         result.setCategory(CategoryMapper.toCategoryModel(request.getCategory()));
         result.setDescription(request.getDescription());
-        result.setUnitPrice(request.getUnitPrice());
         result.setImageUrl(request.getImageUrl());
         result.setIsActive(request.getIsActive());
+        result.setUnitPrice(request.getUnitPrice());
         result.setUnitsInStock(request.getUnitsInStock());
         result.setDateCreated(request.getDateCreated());
         result.setLastUpdated(request.getLastUpdated());
@@ -74,7 +77,7 @@ public class ProductMapper {
         result.setImageUrl(request.getImageUrl());
         result.setUnitsInStock(request.getUnitsInStock());
         result.setIsActive(request.getIsActive());
-        result.setDateCreated(request.getDateCreated().format(ObjectUtil.getFormatterDefault()));
+        result.setDateCreated(request.getDateCreated().format(AppObjectUtil.getFormatterLocalDateTimeDefault()));
 
         return result;
     }
@@ -106,13 +109,14 @@ public class ProductMapper {
         result.setImageUrl(request.getImageUrl());
         result.setUnitsInStock(request.getUnitsInStock());
         result.setIsActive(request.getIsActive());
-        result.setLastUpdated(request.getLastUpdated().format(ObjectUtil.getFormatterDefault()));
+        result.setLastUpdated(request.getLastUpdated().format(AppObjectUtil.getFormatterLocalDateTimeDefault()));
 
         return result;
     }
 
     public static ProductSingleResponseDTO toProductSingleResponseDTO(ProductModel request) {
         ProductSingleResponseDTO result = new ProductSingleResponseDTO();
+        result.setSku(request.getSku());
         result.setName(request.getName());
         result.setCategoryId(request.getCategory().getId());
         result.setDescription(request.getDescription());
@@ -120,6 +124,21 @@ public class ProductMapper {
         result.setImageUrl(request.getImageUrl());
         result.setUnitsInStock(request.getUnitsInStock());
         result.setIsActive(request.getIsActive());
+        return result;
+    }
+
+    public static ProductAllResponseDTO toProductAllResponseDTO(Page<ProductModel> request) {
+        ProductAllResponseDTO result = new ProductAllResponseDTO();
+        result.setContent(request
+                .getContent()
+                .stream()
+                .map(ProductMapper::toProductSingleResponseDTO)
+                .toList());
+        result.setPage(request.getNumber());
+        result.setTotalPages(request.getTotalPages());
+        result.setSize(request.getSize());
+        result.setTotalElements(request.getTotalElements());
+
         return result;
     }
 }

@@ -2,7 +2,7 @@ package demo.jsb2.utils;
 
 import java.time.format.DateTimeFormatter;
 
-public class ObjectUtil {
+public class AppObjectUtil {
 
     public static boolean isNull(Object request) {
         return request == null;
@@ -12,7 +12,7 @@ public class ObjectUtil {
         return string == null || string.isBlank();
     }
 
-    public static DateTimeFormatter getFormatterDefault() {
+    public static DateTimeFormatter getFormatterLocalDateTimeDefault() {
         return DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
     }
 }

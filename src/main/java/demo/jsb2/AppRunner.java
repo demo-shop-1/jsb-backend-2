@@ -6,13 +6,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Jsb2Application {
+public class AppRunner {
 
-	protected static final Logger logger = Logger.getLogger(Jsb2Application.class.getName());
+	protected static final Logger logger = Logger.getLogger(AppRunner.class.getName());
 
 	public static void main(String[] args) {
-		logger.info("Starting web server!");
-		SpringApplication.run(Jsb2Application.class, args);
+		logger.info("AppRunner > main > Starting web server!");
+		SpringApplication.run(AppRunner.class, args);
 	}
 
 }

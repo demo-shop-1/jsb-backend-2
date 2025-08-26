@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductSingleResponseDTO {
+    private String sku;
     private String name;
     private Integer categoryId;
     private String description;

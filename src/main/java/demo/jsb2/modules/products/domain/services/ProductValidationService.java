@@ -15,4 +15,5 @@ public interface ProductValidationService {
     Boolean validateName(String name) throws ProductValidationException;
 
     Boolean validateCategory(CategoryModel category) throws ProductValidationException;
+
 }

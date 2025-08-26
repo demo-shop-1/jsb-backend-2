@@ -11,7 +11,7 @@ import demo.jsb2.modules.products.domain.exceptions.ProductValidationException;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.modules.products.domain.services.ProductValidationService;
 import demo.jsb2.modules.products.domain.utils.ProductUtil;
-import demo.jsb2.utils.ObjectUtil;
+import demo.jsb2.utils.AppObjectUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
@@ -51,7 +51,7 @@ public class ProductValidationApplication extends ProductApplication implements 
     public Boolean validateSKU(String sku) throws ProductValidationException {
         Boolean isValid = true;
 
-        if (ObjectUtil.isBlankString(sku)) {
+        if (AppObjectUtil.isBlankString(sku)) {
             throw ProductUtil.throwValidationError(ProductMessageEnum.SKU_BLANK);
         }
         if (sku.length() < ProductIntegerEnum.SKU_MIN_SIZE.value) {
@@ -65,7 +65,7 @@ public class ProductValidationApplication extends ProductApplication implements 
     public Boolean validateName(String name) throws ProductValidationException {
         Boolean isValid = true;
 
-        if (ObjectUtil.isBlankString(name)) {
+        if (AppObjectUtil.isBlankString(name)) {
             throw ProductUtil.throwValidationError(ProductMessageEnum.NAME_BLANK);
         }
 

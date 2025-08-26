@@ -12,7 +12,7 @@ import demo.jsb2.modules.products.domain.services.ProductCommandService;
 import demo.jsb2.modules.products.domain.services.ProductQueryService;
 import demo.jsb2.modules.products.domain.services.ProductValidationService;
 import demo.jsb2.modules.products.domain.utils.ProductUtil;
-import demo.jsb2.utils.ObjectUtil;
+import demo.jsb2.utils.AppObjectUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
@@ -84,22 +84,22 @@ public class ProductCommandApplication extends ProductApplication implements Pro
             }
 
             // validate image_url
-            if (ObjectUtil.isNull(product.getImageUrl())) {
+            if (AppObjectUtil.isNull(product.getImageUrl())) {
                 product.setImageUrl(productFound.getImageUrl());
             }
 
             // validate unit_price
-            if (ObjectUtil.isNull(product.getUnitPrice())) {
+            if (AppObjectUtil.isNull(product.getUnitPrice())) {
                 product.setUnitPrice(productFound.getUnitPrice());
             }
 
             // validate is_active
-            if (ObjectUtil.isNull(product.getIsActive())) {
+            if (AppObjectUtil.isNull(product.getIsActive())) {
                 product.setIsActive(productFound.getIsActive());
             }
 
             // validate units in stock
-            if (ObjectUtil.isNull(product.getUnitsInStock())) {
+            if (AppObjectUtil.isNull(product.getUnitsInStock())) {
                 product.setUnitsInStock(productFound.getUnitsInStock());
             }
 
