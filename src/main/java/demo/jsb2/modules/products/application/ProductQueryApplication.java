@@ -13,7 +13,6 @@ import demo.jsb2.modules.products.domain.exceptions.ProductQueryException;
 import demo.jsb2.modules.products.domain.models.ProductModel;
 import demo.jsb2.modules.products.domain.ports.out.ProductQueryOutRepository;
 import demo.jsb2.modules.products.domain.services.ProductQueryService;
-import demo.jsb2.modules.products.domain.services.ProductValidationService;
 import demo.jsb2.modules.products.domain.utils.ProductUtil;
 import demo.jsb2.utils.AppObjectUtil;
 import jakarta.annotation.PostConstruct;
@@ -23,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductQueryApplication extends ProductApplication implements ProductQueryService {
     private final ProductQueryOutRepository productQueryRepository;
-    private final ProductValidationService productValidationService;
 
     @PostConstruct
     public void init() {
