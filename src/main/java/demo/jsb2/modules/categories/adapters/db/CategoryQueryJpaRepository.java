@@ -1,5 +1,6 @@
 package demo.jsb2.modules.categories.adapters.db;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +31,11 @@ public interface CategoryQueryJpaRepository extends JpaRepository<CategoryEntity
     @Override
     default CategoryModel save(CategoryModel category) {
         return CategoryMapper.toCategoryModel(save(CategoryMapper.toCategoryEntity(category)));
+    }
+
+    @Override
+    default List<CategoryModel> findAllCategories() {
+        return findAll().stream().map(CategoryMapper::toCategoryModel).toList();
     }
 
 }
