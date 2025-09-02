@@ -1,7 +1,10 @@
 package demo.jsb2.modules.categories.adapters.mappers;
 
+import java.util.List;
+
 import demo.jsb2.modules.categories.adapters.dto.CategoryCreateRequestDTO;
 import demo.jsb2.modules.categories.adapters.dto.CategoryCreateResponseDTO;
+import demo.jsb2.modules.categories.adapters.dto.CategoryGetAllResponseDTO;
 import demo.jsb2.modules.categories.adapters.dto.CategoryGetOneResponseDTO;
 import demo.jsb2.modules.categories.adapters.entities.CategoryEntity;
 import demo.jsb2.modules.categories.domain.models.CategoryModel;
@@ -58,6 +61,13 @@ public class CategoryMapper {
         result.setName(request.getName());
         result.setIsActive(request.getIsActive());
         result.setDateCreated(request.getDateCreated().format(AppObjectUtil.getFormatterLocalDateTimeDefault()));
+
+        return result;
+    }
+
+    public static CategoryGetAllResponseDTO CategoryGetAllResponseDTO(List<CategoryModel> request) {
+        CategoryGetAllResponseDTO result = new CategoryGetAllResponseDTO();
+        result.setContent(request.stream().map(CategoryMapper::toCategoryGetOneResponseDTO).toList());
 
         return result;
     }

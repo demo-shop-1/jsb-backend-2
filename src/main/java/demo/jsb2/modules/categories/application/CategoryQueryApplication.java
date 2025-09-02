@@ -1,5 +1,7 @@
 package demo.jsb2.modules.categories.application;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import demo.jsb2.modules.categories.domain.enums.CategoryMessageEnum;
@@ -47,5 +49,12 @@ public class CategoryQueryApplication extends CategoryApplication implements Cat
     @Override
     public Boolean existThisCategory(Integer id) {
         return this.findById(id) != null;
+    }
+
+    @Override
+    public List<CategoryModel> findAll() {
+        startMethod("findAll");
+        endMethod("findAll");
+        return categoryQueryOutRepository.findAllCategories();
     }
 }

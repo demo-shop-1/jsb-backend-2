@@ -1,11 +1,15 @@
 package demo.jsb2.modules.categories.adapters.web;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import demo.jsb2.modules.categories.adapters.dto.CategoryGetAllResponseDTO;
 import demo.jsb2.modules.categories.adapters.dto.CategoryGetOneResponseDTO;
 import demo.jsb2.modules.categories.adapters.mappers.CategoryMapper;
 import demo.jsb2.modules.categories.domain.enums.CategoryMessageEnum;
@@ -17,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(value = "/category")
 public class CategoryQueryController extends CategoryController {
 
     private final CategoryQueryService categoryQueryApplication;
@@ -26,7 +31,7 @@ public class CategoryQueryController extends CategoryController {
         nameClass = "CategoryQueryController";
     }
 
-    @GetMapping("/category/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CategoryGetOneResponseDTO> getOneCategory(@PathVariable Integer id) {
         startMethod("getOneCategory");
 
@@ -41,4 +46,13 @@ public class CategoryQueryController extends CategoryController {
                 .body(CategoryMapper.toCategoryGetOneResponseDTO(categoryFound));
     }
 
+    @GetMapping
+    public ResponseEntity<CategoryGetAllResponseDTO> getAllCategories() {
+        startMethod("getAllCategories");
+
+        List<CategoryModel> categoriesGot = categoryQueryApplication.findAll();
+
+        endMethod("getAllCategories");
+        return ResponseEntity.ok().body(CategoryMapper.CategoryGetAllResponseDTO(categoriesGot));
+    }
 }
