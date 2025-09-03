@@ -16,4 +16,13 @@ public class ProductSpecifications {
             return predicate;
         };
     }
+
+    public static Specification<ProductEntity> withRandom() {
+        return (root, query, builder) -> {
+            if (query != null) {
+                query.orderBy(builder.asc(builder.function("RAND", Double.class)));
+            }
+            return builder.conjunction();
+        };
+    }
 }

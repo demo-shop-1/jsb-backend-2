@@ -62,7 +62,9 @@ public class ProductQueryApplication extends ProductApplication implements Produ
         Specification<ProductEntity> specification = Specification.unrestricted();
 
         // Add filter categoryId
-        if (!AppObjectUtil.isNull(category)) {
+        if (AppObjectUtil.isNull(category)) {
+            specification = specification.and(ProductSpecifications.withRandom());
+        } else {
             specification = specification.and(ProductSpecifications.hasCategoryId(category));
         }
 
